@@ -42,6 +42,7 @@
     
 ### **📁 증빙 자료:**
   * [1차_AI협업.pdf 첨부 완료]
+  https://github.com/MJU-PY-2026-1/mju-py-homework-sy-park-0/blob/main/1%EC%B0%A8_AI%ED%98%91%EC%97%85.pdf
 
 <br>
 
