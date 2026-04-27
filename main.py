@@ -1,4 +1,4 @@
-# 파일이름 : 캠퍼스 커리어 플래너
+# 파일이름 : 캠퍼스 커리어 플래너         
 # 작 성 자 :60211865 박성연
 
 print("============캠퍼스 커리어 플래너==============")
@@ -30,7 +30,7 @@ else :
 
 task_info = [user_name, task_name, category, days_left, importance, study_hours]
 
-if category == "잘못입력" or importance <1 or importance > 5 or days_left < 0, or study_hours < 0 :
+if category == "잘못입력" or importance <1 or importance > 5 or days_left < 0 or study_hours < 0 :
   print("\n입력값이 올바르지 않음")
   print("분야번호, 중요도, 남은일수, 예상소요시간을 다시 확인")
 
@@ -68,7 +68,7 @@ else :
       message = "자격증 준비를 빠르게 진행"
   else :
     if days_left <= 3 :
-      message = "등급은 높지 않지만 마감이 가까우니 주의")
+      message = "등급은 높지 않지만 마감이 가까우니 주의"
     else :
       message = "계획적으로 진행하면 되는 일정"
 
