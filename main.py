@@ -88,7 +88,7 @@ def analyze_task(task):
     hours = last_task[5]
     score = last_task[6]
     grade = last_task[7]
-    if (category == "취업" and days_left <= 3 and importance >= 4 ) or (category == "연구" and importnace == 5):
+    if (category == "취업" and days_left <= 3 and importance >= 4 ) or (category == "연구" and importance == 5):
       special_title = "최우선 집중 일정"
     elif category == "자격증" and (days_left <= 7 or hours >= 5):
       special_title = "단기 관리 필요 일정"
@@ -108,9 +108,9 @@ def analyze_task(task):
         message = "자격증 준비를 진행"
     else:
       if days_left <= 3:
-        message = "등급은 높지 않지만 마감이 가까우니 주의 필요")
+        message = "등급은 높지 않지만 마감이 가까우니 주의 필요"
       else:
-        message = "계획적으로 진행하면 되는 일정")
+        message = "계획적으로 진행하면 되는 일정"
         
     print(f"긴급도 점수: {score:.1f}")
     print(f"우선순위 등급: {grade}")
