@@ -4,11 +4,12 @@
 task_list = []
 
 def show_menu():
-  print("캠퍼스 커리어 플래너 v3.0")
+  print("\n캠퍼스 커리어 플래너 v3.0")
   print("1. 일정 입력")
-  print("2. 저장된 일정 조회")
-  print("3. 긴급도 분석")
-  print("4. 종료")
+  print("2. 전체 일정 조회")
+  print("3. 최근 일정 긴급도 분석")
+  print("4. 파일 저장")
+  print("5. 종료")
 
 def calculate_urgency(importance, hours, days_left):
   urgency_score = (importance * 10) + (hours * 2) - days_left
@@ -38,8 +39,15 @@ def add_task():
   print("2. 연구")
   print("3. 취업")
   print("4. 자격증")
-  category_num = int(input("번호 입력: "))
-  
+  try:
+    category_num = int(input("번호 입력: "))
+    days_left = int(input("마감까지 남은 일수 입력: "))
+    importance = int(input("중요도(1~5)를 입력: "))
+    hours = float(input("예상 소요 시간을 입력: "))
+  except ValueError:
+    print("정수 숫자를 입력하세요")
+    return
+
   if category_num == 1 :
     category = "학교공부"
   elif category_num == 2:
@@ -50,30 +58,32 @@ def add_task():
     category = "자격증"
   else :
     category = "잘못입력"
-    
-  days_left = int(input("마감까지 남은 일수 입력: "))
-  importance = int(input("중요도(1~5)를 입력: "))
-  hours = float(input("예상 소요 시간을 입력: "))
+  
   score = calculate_urgency(importance, hours, days_left)
   grade = decide_grade(score)
   task = [user_name, task_name, category, days_left, importance, hours, score, grade]
   task_list.append(task)
   print("\n일정 저장 완료")
 
-def show_task():
+def show_tasks():
   print("\n[저장된 일정 조회]")
   
   if len(task_list) == 0:
     print("저장된 일정 없음")
   else:
-    task = task_list[-1]
+    count = 1
     
-    print(f"이름: {task[0]}")
-    print(f"할일: {task[1]}")
-    print(f"분야: {task[2]}")
-    print(f"남은 기한: {task[3]}일")
-    print(f"중요도: {task[4]}")
-    print(f"예상소요시간: {task[5]:.1f}시간")
+    for task in task_list:
+      print("\n", count, "번째 일정")
+      print(f"이름 : {task[0]}")
+      print(f"할일 : {task[1]}")
+      print(f"분야 : {task[2]}")
+      print(f"남은기한 : {task[3]}일")
+      print(f"중요도 : {task[4]}")
+      print(f"예상소요시간 : {task[5]:.1f}시간")
+      print(f"긴급도점수 : {task[6]:.1f}")
+      print(f"우선순위등급 : {task[7]}")
+      count = count + 1
 
 def analyze_task(task):
   print("\n[긴급도 분석]")
@@ -92,7 +102,7 @@ def analyze_task(task):
       special_title = "최우선 집중 일정"
     elif category == "자격증" and (days_left <= 7 or hours >= 5):
       special_title = "단기 관리 필요 일정"
-    elif category == "학교공부" and importnace >= 4 and hours >= 4:
+    elif category == "학교공부" and importance >= 4 and hours >= 4:
       special_title = "학습 집중 일정"
     else:
       special_title = "일반 일정"
@@ -117,6 +127,26 @@ def analyze_task(task):
     print(f"특별 분류: {special_title}")
     print(f"안내 메세지: {message}")
 
+def save_tasks():
+  print("\n[파일저장]")
+
+  if len(task_list) == 0:
+    print("저장할 일정 없음")
+  else :
+    try:
+      file = open("career_tasks.txt", "w", encoding = "utf-8")
+      file.write("이름,할일,분야,남은기한,중요도,예상소요시간,긴급도점수,등급\n")
+
+      for task in task_list:
+        line = str(task[0]) + "," + str(task[1]) + "," + str(task[2]) + "," + str(task[3]) + "," + str(task[4]) + "," + str(task[5]) + "," + str(task[6]) + "," + str(task[7]) + "\n"
+        file.write(line)
+
+      file.close()
+      print("career_tasks.txt 파일저장완료")
+
+    except Exception:
+      print("파일저장 중 오류 발생")
+
 while True:
   show_menu()
   choice = input("메뉴를 선택: ")
@@ -124,10 +154,12 @@ while True:
   if choice =="1":
     add_task()
   elif choice == "2":
-    show_task()
+    show_tasks()
   elif choice == "3":
     analyze_task(task_list)
   elif choice == "4":
+    save_tasks()
+  elif choice == "5":
     print("프로그램 종료")
     break
   else:
